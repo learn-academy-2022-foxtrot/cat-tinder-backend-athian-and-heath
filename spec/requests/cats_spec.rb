@@ -8,7 +8,7 @@ RSpec.describe "Cats", type: :request do
         name: "Fluffy",
         age: 4,
         enjoys: "eating cat treats",
-        image: "comhttp/cat."
+        image: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80"
         
         )
         
@@ -30,11 +30,13 @@ RSpec.describe "Cats", type: :request do
           name: "Fluffy",
           age: 4,
           enjoys: "eating cat treats",
-          image: "comhttp/cat."
+          image: "https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1036&q=80"
         }
       }
 
       post "/cats", params: cat_params
+
+      expect(response).to have_http_status(200)
 
       cat = Cat.first
 
@@ -54,12 +56,16 @@ RSpec.describe "Cats", type: :request do
         image: "comhttp/cat."
       }
     }
-
+    #sends request to the server
     post '/cats', params: cat_params
 
     expect(response.status).to eq 422
-    json = JSON.parse(response.body)
+
+    # convert json response into ruby hash
+    cat = json = JSON.parse(response.body)
+
     expect(json['name']).to include "can't be blank"
+    expect
   end
 end
      
